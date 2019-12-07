@@ -10,15 +10,16 @@ xdr_Candidato (XDR *xdrs, Candidato *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_array (xdrs, (char **)&objp->nome.nome_val, (u_int *) &objp->nome.nome_len, 30,
+	int i;
+	 if (!xdr_vector (xdrs, (char *)objp->nome, 30,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_array (xdrs, (char **)&objp->giudice.giudice_val, (u_int *) &objp->giudice.giudice_len, 30,
+	 if (!xdr_vector (xdrs, (char *)objp->giudice, 30,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->categoria))
 		 return FALSE;
-	 if (!xdr_array (xdrs, (char **)&objp->nomefile.nomefile_val, (u_int *) &objp->nomefile.nomefile_len, 256,
+	 if (!xdr_vector (xdrs, (char *)objp->nomefile, 256,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->fase))
@@ -45,7 +46,8 @@ xdr_Giudice (XDR *xdrs, Giudice *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_array (xdrs, (char **)&objp->nome.nome_val, (u_int *) &objp->nome.nome_len, 30,
+	int i;
+	 if (!xdr_vector (xdrs, (char *)objp->nome, 30,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->punteggio))
@@ -70,7 +72,8 @@ xdr_Input (XDR *xdrs, Input *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_array (xdrs, (char **)&objp->nome.nome_val, (u_int *) &objp->nome.nome_len, 30,
+	int i;
+	 if (!xdr_vector (xdrs, (char *)objp->nome, 30,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->operazione))

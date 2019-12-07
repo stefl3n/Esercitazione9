@@ -2,10 +2,10 @@ const NUMGIUDICI=5;
 const NUMCANDIDATI=10;
 
 struct Candidato{
-    char nome<30>;
-    char giudice<30>;
+    char nome[30];
+    char giudice[30];
     char categoria;
-    char nomefile<256>;
+    char nomefile[256];
     char fase;
     int voto;
 };
@@ -15,7 +15,7 @@ struct Candidati{
 };
 
 struct Giudice{ 
-    char nome<30>;
+    char nome[30];
     int punteggio;
 };
 
@@ -24,7 +24,7 @@ struct Giudici{
 };
 
 struct Input{
-    char nome<30>;
+    char nome[30];
     char operazione;
 };
 
