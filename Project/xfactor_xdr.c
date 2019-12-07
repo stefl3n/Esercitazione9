@@ -73,8 +73,7 @@ xdr_Input (XDR *xdrs, Input *objp)
 	 if (!xdr_array (xdrs, (char **)&objp->nome.nome_val, (u_int *) &objp->nome.nome_len, 30,
 		sizeof (char), (xdrproc_t) xdr_char))
 		 return FALSE;
-	 if (!xdr_array (xdrs, (char **)&objp->operazione.operazione_val, (u_int *) &objp->operazione.operazione_len, 4,
-		sizeof (char), (xdrproc_t) xdr_char))
+	 if (!xdr_char (xdrs, &objp->operazione))
 		 return FALSE;
 	return TRUE;
 }

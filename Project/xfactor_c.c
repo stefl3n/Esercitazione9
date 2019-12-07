@@ -1,13 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "xfactor.h"
 
 void main(int argc, char *argv[]){
-    char *host, CLIENT *cl;
+    char *host; CLIENT *cl;
     char ok[256];
     Giudici *giudici;
     Input *input;
     void *in;
     char op;
-    int *ris;
+    int *ris, i;
     
     if(argc!=2){
         printf("usage: %s server_host\n", argv[0]);
@@ -32,23 +35,23 @@ void main(int argc, char *argv[]){
             }
             printf("Classifica GIUDICI: \n");
             for(i=0; i<NUMGIUDICI; i++){
-                printf("%d: %s (%d)\n", i+1, giudici.giudice[i].nome, giudici.giudice[i].punteggio);
+                printf("%d: %s (%d)\n", i+1, giudici->giudice[i].nome, giudici->giudice[i].punteggio);
             }
         } // if C
         else if(strcmp(ok, "V")==0){
             printf("Inserirsi il nome del candidato: ");
-            scanf("%s", input.nome);
+            scanf("%s", input->nome);
             
             printf("Vuoi aggiungere (+) o togliere (-) un voto al candidato?\n");
-            getchar(op);
+            op = getchar();
             
             if(op!='+' || op!='-'){
                 printf("Errore: Inserire + o -\n");
-                getchar(op);
+                op = getchar();
             }
-            input.operazione = op;
+            input->operazione = op;
             
-            ris = esprimi_esito_1(input, cl);
+            ris = esprimi_voto_1(input, cl);
             
             if(ris == NULL){
                 clnt_perror(cl, host);

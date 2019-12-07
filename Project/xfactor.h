@@ -59,10 +59,7 @@ struct Input {
 		u_int nome_len;
 		char *nome_val;
 	} nome;
-	struct {
-		u_int operazione_len;
-		char *operazione_val;
-	} operazione;
+	char operazione;
 };
 typedef struct Input Input;
 
