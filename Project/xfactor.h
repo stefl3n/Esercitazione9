@@ -17,10 +17,10 @@ extern "C" {
 #define NUMCANDIDATI 10
 
 struct Candidato {
-	char nome[30];
-	char giudice[30];
+	char *nome;
+	char *giudice;
 	char categoria;
-	char nomefile[256];
+	char *nomefile;
 	char fase;
 	int voto;
 };
@@ -32,7 +32,7 @@ struct Candidati {
 typedef struct Candidati Candidati;
 
 struct Giudice {
-	char nome[30];
+	char *nome;
 	int punteggio;
 };
 typedef struct Giudice Giudice;
@@ -43,7 +43,7 @@ struct Giudici {
 typedef struct Giudici Giudici;
 
 struct Input {
-	char nome[30];
+	char *nome;
 	char operazione;
 };
 typedef struct Input Input;

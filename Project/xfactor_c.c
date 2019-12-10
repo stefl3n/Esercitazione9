@@ -24,30 +24,39 @@ void main(int argc, char *argv[]){
         exit(1);
     }
     
+    input = (Input*) malloc (sizeof(Input));
+    input->nome = (char*) malloc (30*sizeof(char));
+    
     printf("Inserire: \nC) per vedere la classifica giudici\tV) Per Dare/Togliere un voto ad un candidato\t^D per terminare: ");
     
     while(gets(ok)){
         if(strcmp(ok, "C")==0){
             giudici = classifica_giudici_1(in, cl);
+
             if(giudici == NULL){
                 clnt_perror(cl, host);
                 exit(1);
             }
             printf("Classifica GIUDICI: \n");
             for(i=0; i<NUMGIUDICI; i++){
-                printf("%d: %s (%d)\n", i+1, giudici->giudice[i].nome, giudici->giudice[i].punteggio);
+                if(strcmp(giudici->giudice[i].nome, "L")!=0 && giudici->giudice[i].punteggio!=-1){
+                    printf("%d: %s (%d)\n", i+1, giudici->giudice[i].nome, giudici->giudice[i].punteggio);
+                } 
             }
         } // if C
         else if(strcmp(ok, "V")==0){
             printf("Inserirsi il nome del candidato: ");
             scanf("%s", input->nome);
+            getchar();
             
             printf("Vuoi aggiungere (+) o togliere (-) un voto al candidato?\n");
             op = getchar();
+            getchar();
             
-            if(op!='+' || op!='-'){
+            if(op!='+' && op!='-'){
                 printf("Errore: Inserire + o -\n");
                 op = getchar();
+                getchar();
             }
             input->operazione = op;
             
