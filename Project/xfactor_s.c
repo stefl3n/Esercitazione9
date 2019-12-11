@@ -78,9 +78,35 @@ void ordinaGiudici(){
     }
 }
 
+void quicksort(int primo,int ultimo){
+   int i, j, pivot, temp;
+   if(primo<ultimo){
+      pivot=primo;
+      i=primo;
+      j=ultimo;     
+      
+      while(i<j){
+         while(giudici.giudice[i].punteggio>=giudici.giudice[pivot].punteggio&&i<ultimo)
+            i++;
+         while(giudici.giudice[j].punteggio<giudici.giudice[pivot].punteggio)
+            j--;
+         if(i<j){   
+            scambia(i, j);
+         }
+      }
+
+      scambia(pivot, j);
+      quicksort(primo,j-1);
+      quicksort(j+1,ultimo);
+   }
+}
+
+
+
 Giudici * classifica_giudici_1_svc(void *in, struct svc_req *rqstp){
     int j;
-    inizializza();
+    //inizializza();
+    quicksort(0, NUMGIUDICI-1);
     ordinaGiudici();
     
     for(j=0; j<n; j++){
