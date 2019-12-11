@@ -39,7 +39,7 @@ void main(int argc, char *argv[]){
             }
             printf("Classifica GIUDICI: \n");
             for(i=0; i<NUMGIUDICI; i++){
-                if(strcmp(giudici->giudice[i].nome, "L")!=0 && giudici->giudice[i].punteggio!=-1){
+                if(strcmp(giudici->giudice[i].nome, "L")!=0 || giudici->giudice[i].punteggio!=-1){
                     printf("%d: %s (%d)\n", i+1, giudici->giudice[i].nome, giudici->giudice[i].punteggio);
                 } 
             }
