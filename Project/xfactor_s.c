@@ -14,9 +14,9 @@ void inizializza(){
     printf("Inizio inizializzazione\n");
     
     for(i=0; i<NUMCANDIDATI; i++){
-        candidati.candidato[i].nome = (char*) malloc (30*sizeof(char));
-        candidati.candidato[i].giudice = (char*) malloc (30*sizeof(char));
-        candidati.candidato[i].nomefile = (char*) malloc (30*sizeof(char));
+        candidati.candidato[i].nome = (char*) malloc (MAXNAME*sizeof(char));
+        candidati.candidato[i].giudice = (char*) malloc (MAXNAME*sizeof(char));
+        candidati.candidato[i].nomefile = (char*) malloc (MAXFILENAME*sizeof(char));
         strcpy(candidati.candidato[i].nome, "L");
         strcpy(candidati.candidato[i].giudice, "L");
         strcpy(candidati.candidato[i].nomefile, "L");
@@ -27,7 +27,7 @@ void inizializza(){
     }
     
     for(i=0; i<NUMGIUDICI; i++){
-        giudici.giudice[i].nome = (char*) malloc(30*sizeof(char));
+        giudici.giudice[i].nome = (char*) malloc(MAXNAME*sizeof(char));
         strcpy(giudici.giudice[i].nome, "L");
         giudici.giudice[i].punteggio = -1;
     }
@@ -89,12 +89,41 @@ void ordinaGiudici(){
     giudiciOrdinati=1;
 }
 
+void quicksort(int primo,int ultimo){
+   int i, j, pivot, temp;
+   if(primo<ultimo){
+      pivot=primo;
+      i=primo;
+      j=ultimo;     
+      
+      while(i<j){
+         while(giudici.giudice[i].punteggio>=giudici.giudice[pivot].punteggio&&i<ultimo)
+            i++;
+         while(giudici.giudice[j].punteggio<giudici.giudice[pivot].punteggio)
+            j--;
+         if(i<j){   
+            scambia(i, j);
+         }
+      }
+
+      scambia(pivot, j);
+      quicksort(primo,j-1);
+      quicksort(j+1,ultimo);
+   }
+}
+
+
+
 Giudici * classifica_giudici_1_svc(void *in, struct svc_req *rqstp){
     int j;
     inizializza();
     
+    //quicksort(0, NUMGIUDICI-1);
     if(!giudiciOrdinati) ordinaGiudici();
     
+    for(j=0; j<NUMGIUDICI; j++){
+        printf("%s %d\n", giudici.giudice[j].nome, giudici.giudice[j].punteggio);
+    }
     return (&giudici);
 }
 
@@ -110,7 +139,7 @@ int * esprimi_voto_1_svc(Input *input, struct svc_req *rqstp){
                 candidati.candidato[i].voto++;
                 
                 for(j=0; j<NUMGIUDICI; j++){
-                    if(strcmp(giudici.giudice[j].nome, candidati.candidato[i].nome)==0)
+                    if(strcmp(giudici.giudice[j].nome, candidati.candidato[i].giudice)==0)
                         giudici.giudice[j].punteggio++;
                 }
                 
@@ -123,7 +152,7 @@ int * esprimi_voto_1_svc(Input *input, struct svc_req *rqstp){
                 candidati.candidato[i].voto--;
                 
                  for(j=0; j<NUMGIUDICI; j++){
-                    if(strcmp(giudici.giudice[j].nome, candidati.candidato[i].nome)==0)
+                    if(strcmp(giudici.giudice[j].nome, candidati.candidato[i].giudice)==0)
                         giudici.giudice[j].punteggio--;
                 }
                 

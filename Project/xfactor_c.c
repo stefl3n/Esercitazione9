@@ -25,7 +25,7 @@ void main(int argc, char *argv[]){
     }
     
     input = (Input*) malloc (sizeof(Input));
-    input->nome = (char*) malloc (30*sizeof(char));
+    input->nome = (char*) malloc (MAXNAME*sizeof(char));
     
     printf("Inserire: \nC) per vedere la classifica giudici\tV) Per Dare/Togliere un voto ad un candidato\t^D per terminare: ");
     

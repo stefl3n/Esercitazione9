@@ -10,13 +10,13 @@ xdr_Candidato (XDR *xdrs, Candidato *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->nome, 30))
+	 if (!xdr_string (xdrs, &objp->nome, MAXNAME))
 		 return FALSE;
-	 if (!xdr_string (xdrs, &objp->giudice, 30))
+	 if (!xdr_string (xdrs, &objp->giudice, MAXNAME))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->categoria))
 		 return FALSE;
-	 if (!xdr_string (xdrs, &objp->nomefile, 256))
+	 if (!xdr_string (xdrs, &objp->nomefile, MAXNAMEFILE))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->fase))
 		 return FALSE;
@@ -42,7 +42,7 @@ xdr_Giudice (XDR *xdrs, Giudice *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->nome, 30))
+	 if (!xdr_string (xdrs, &objp->nome, MAXNAME))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->punteggio))
 		 return FALSE;
@@ -66,7 +66,7 @@ xdr_Input (XDR *xdrs, Input *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->nome, 30))
+	 if (!xdr_string (xdrs, &objp->nome, MAXNAME))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->operazione))
 		 return FALSE;
