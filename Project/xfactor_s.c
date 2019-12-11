@@ -25,26 +25,33 @@ void inizializza(){
         candidati.candidato[i].voto = -1;
         
     }
+    
+    for(i=0; i<NUMGIUDICI; i++){
+        giudici.giudice[i].nome = (char*) malloc(30*sizeof(char));
+        strcpy(giudici.giudice[i].nome, "L");
+        giudici.giudice[i].punteggio = -1;
+    }
 
     //inizializzo Secondo e Terzo come da Proposta
-    giudici.giudice[0].nome = (char*) malloc (30*sizeof(char));
     strcpy(candidati.candidato[1].nome, "Brasco");
     strcpy(candidati.candidato[1].giudice, "Bowie");
-    strcpy(giudici.giudice[0].nome, "Bowie");
     strcpy(candidati.candidato[1].nomefile, "BrascoProfile.txt");
     candidati.candidato[1].categoria = 'U';
     candidati.candidato[1].fase = 'A';
     candidati.candidato[1].voto = 100;
+    
+    strcpy(giudici.giudice[0].nome, "Bowie");
     giudici.giudice[0].punteggio = 100;
     
-    giudici.giudice[1].nome = (char*) malloc (30*sizeof(char));
     strcpy(candidati.candidato[2].nome, "Viga");
     strcpy(candidati.candidato[2].giudice, "Winehouse");
-    strcpy(giudici.giudice[1].nome, "Winehouse");
     strcpy(candidati.candidato[2].nomefile, "VigaProfile.txt");
     candidati.candidato[2].categoria = 'D';
     candidati.candidato[2].fase = 'S';
     candidati.candidato[2].voto = 50;
+    
+    
+    strcpy(giudici.giudice[1].nome, "Winehouse");
     giudici.giudice[1].punteggio = 50;
     
     inizializzato = 1;
@@ -79,8 +86,6 @@ Giudici * classifica_giudici_1_svc(void *in, struct svc_req *rqstp){
     for(j=0; j<n; j++){
         printf("%s %d\n", giudici.giudice[j].nome, giudici.giudice[j].punteggio);
     }
-    printf("%x\n", &giudici);
-    
     return (&giudici);
 }
 
