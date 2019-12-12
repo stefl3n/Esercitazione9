@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "xfactor.h"
 static int inizializzato=0;
 static int giudiciOrdinati=0;
 static Candidati candidati;
 static Giudici giudici;
+static int cntTest;
 
 void inizializza(){
     int i, j, esiste;
@@ -38,30 +40,66 @@ void inizializza(){
     strcpy(candidati.candidato[1].nomefile, "BrascoProfile.txt");
     candidati.candidato[1].categoria = 'U';
     candidati.candidato[1].fase = 'A';
-    candidati.candidato[1].voto = 100;
+    candidati.candidato[1].voto = 0;
     
-    strcpy(giudici.giudice[0].nome, "Bowie");
-    giudici.giudice[0].punteggio = 100;
     
     strcpy(candidati.candidato[2].nome, "Viga");
     strcpy(candidati.candidato[2].giudice, "Winehouse");
     strcpy(candidati.candidato[2].nomefile, "VigaProfile.txt");
     candidati.candidato[2].categoria = 'D';
     candidati.candidato[2].fase = 'S';
-    candidati.candidato[2].voto = 50;
+    candidati.candidato[2].voto = 0;
     
+    strcpy(candidati.candidato[3].nome, "0");
+    strcpy(candidati.candidato[3].giudice, "Winehouse");
+    strcpy(candidati.candidato[3].nomefile, "0.txt");
+    candidati.candidato[3].categoria = 'D';
+    candidati.candidato[3].fase = 'S';
+    candidati.candidato[3].voto = 0;
+    
+        strcpy(candidati.candidato[4].nome, "1");
+    strcpy(candidati.candidato[4].giudice, "Bowie");
+    strcpy(candidati.candidato[4].nomefile, "1.txt");
+    candidati.candidato[4].categoria = 'D';
+    candidati.candidato[4].fase = 'S';
+    candidati.candidato[4].voto = 0;
+    
+        strcpy(candidati.candidato[5].nome, "2");
+    strcpy(candidati.candidato[5].giudice, "Davide");
+    strcpy(candidati.candidato[5].nomefile, "2.txt");
+    candidati.candidato[5].categoria = 'D';
+    candidati.candidato[5].fase = 'S';
+    candidati.candidato[5].voto = 0;
+    
+        strcpy(candidati.candidato[6].nome, "3");
+    strcpy(candidati.candidato[6].giudice, "Leone");
+    strcpy(candidati.candidato[6].nomefile, "3.txt");
+    candidati.candidato[6].categoria = 'D';
+    candidati.candidato[6].fase = 'S';
+    candidati.candidato[6].voto = 0;
+    
+        strcpy(candidati.candidato[7].nome, "4");
+    strcpy(candidati.candidato[7].giudice, "Stefano");
+    strcpy(candidati.candidato[7].nomefile, "4.txt");
+    candidati.candidato[7].categoria = 'D';
+    candidati.candidato[7].fase = 'S';
+    candidati.candidato[7].voto = 0;
+    
+    
+    strcpy(giudici.giudice[0].nome, "Bowie");
+    giudici.giudice[0].punteggio = 0;
     
     strcpy(giudici.giudice[1].nome, "Winehouse");
-    giudici.giudice[1].punteggio = 50;
+    giudici.giudice[1].punteggio = 0;
     
     strcpy(giudici.giudice[2].nome, "Leone");
-    giudici.giudice[2].punteggio = 1;
+    giudici.giudice[2].punteggio = 0;
     
     strcpy(giudici.giudice[3].nome, "Davide");
-    giudici.giudice[3].punteggio = 2;
+    giudici.giudice[3].punteggio = 0;
     
     strcpy(giudici.giudice[4].nome, "Stefano");
-    giudici.giudice[4].punteggio = 300;
+    giudici.giudice[4].punteggio = 0;
     
     inizializzato = 1;
     printf("Fine inizializzazione\n");
@@ -75,7 +113,9 @@ void scambia(int max, int min){
 
 void ordinaGiudici(){
     int i, n, ordinato = 0;
+    
     n = NUMGIUDICI;
+    
     while (n>1 && ordinato==0){
         ordinato = 1;
         for (i=0; i<n-1; i++)
@@ -85,12 +125,14 @@ void ordinaGiudici(){
             }
         n--;
     }
+       
     printf("GiudiciRiordinati\n");
     giudiciOrdinati=1;
 }
 
 void quicksort(int primo,int ultimo){
    int i, j, pivot, temp;
+
    if(primo<ultimo){
       pivot=primo;
       i=primo;
@@ -110,6 +152,8 @@ void quicksort(int primo,int ultimo){
       quicksort(primo,j-1);
       quicksort(j+1,ultimo);
    }
+
+   giudiciOrdinati=1;
 }
 
 
@@ -119,7 +163,9 @@ Giudici * classifica_giudici_1_svc(void *in, struct svc_req *rqstp){
     inizializza();
     
     //quicksort(0, NUMGIUDICI-1);
+    //ordinaGiudici();
     if(!giudiciOrdinati) ordinaGiudici();
+    //if(!giudiciOrdinati) quicksort(0, NUMGIUDICI-1);
     
     for(j=0; j<NUMGIUDICI; j++){
         printf("%s %d\n", giudici.giudice[j].nome, giudici.giudice[j].punteggio);
@@ -150,10 +196,18 @@ int * esprimi_voto_1_svc(Input *input, struct svc_req *rqstp){
             else if(input->operazione == '-'){
                 giudiciOrdinati=0;
                 candidati.candidato[i].voto--;
+                if(candidati.candidato[i].voto<=0)
+                {
+                    candidati.candidato[i].voto=0;
+                }
                 
                  for(j=0; j<NUMGIUDICI; j++){
                     if(strcmp(giudici.giudice[j].nome, candidati.candidato[i].giudice)==0)
                         giudici.giudice[j].punteggio--;
+                        if(giudici.giudice[j].punteggio<=0)
+                        {
+                            giudici.giudice[j].punteggio=0;
+                        }
                 }
                 
                 printf("%s: %d\n", candidati.candidato[i].nome, candidati.candidato[i].voto);

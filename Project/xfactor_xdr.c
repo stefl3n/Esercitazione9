@@ -16,7 +16,7 @@ xdr_Candidato (XDR *xdrs, Candidato *objp)
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->categoria))
 		 return FALSE;
-	 if (!xdr_string (xdrs, &objp->nomefile, MAXNAMEFILE))
+	 if (!xdr_string (xdrs, &objp->nomefile, MAXFILENAME))
 		 return FALSE;
 	 if (!xdr_char (xdrs, &objp->fase))
 		 return FALSE;

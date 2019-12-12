@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "xfactor.h"
 
 void main(int argc, char *argv[]){
@@ -70,6 +71,42 @@ void main(int argc, char *argv[]){
             if(*ris==0) printf("Operazione riuscita!\n");
             else printf("Operazione fallita :(\n");
         } // if V
+        else if(strcmp(ok, "T")==0)
+        {
+            int numTest;
+            int cnt;
+            float start, stop;
+            printf("Numero test: ");
+            scanf("%d", &numTest);
+            getchar();
+            
+            for(cnt=0; cnt<numTest; cnt++)
+            {
+                int a=(int)(rand()%5);
+                switch(a)
+                {
+                    case 1 : 
+                    {
+                        start=clock();
+                        classifica_giudici_1(in, cl);
+                        stop=clock();
+                        printf("CLASSIFICA: elapsed time: %0.4f\n", (stop-start)*1000/CLOCKS_PER_SEC);
+                    }
+                    
+                    default :
+                    {
+                        
+                        sprintf(input->nome, "%d", (int)(rand()*rand())%5);
+                        input->operazione='+';
+                        esprimi_voto_1(input, cl);
+                        
+                    }
+                    
+                }
+            }
+            
+            
+        }
         else
             printf("Argomento di ingresso errato!!\n");
         printf("Inserire: \nC) per vedere la classifica giudici\tV) Per Dare/Togliere un voto ad un candidato\t^D per terminare: ");

@@ -16,7 +16,7 @@ extern "C" {
 #define NUMGIUDICI 5
 #define NUMCANDIDATI 10
 #define MAXNAME 30
-#define MAXNAMEFILE 255
+#define MAXFILENAME 255
 
 struct Candidato {
 	char *nome;
